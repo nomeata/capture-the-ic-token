@@ -1,0 +1,21 @@
+{
+  "canisters": {
+    "capture-the-ic-token": {
+      "main": "main.mo",
+      "type": "motoko"
+    }
+  },
+ "defaults": {
+    "build": {
+      "packtool": "vessel sources",
+      "output": "build"
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}
