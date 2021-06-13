@@ -7,7 +7,7 @@ Internet Computer’s random tape (using the `aaaaa-aa.raw_rand()` call), and
 then kept in main memory. If you find a way to read from the secret tape, or
 from the canister’s main memory you unlock one ICP.
 
-The canister is life with canister id **TODO** (not live yet).
+The canister is live with canister id **TODO** (not live yet).
 
 The ICP is sitting in account **TODO** owned by principal **TODO**.
 
@@ -35,7 +35,7 @@ canister ids, so Canisters cannot own ICPs via their canister id (which is a
 principal).
 
 But canisters can also create [Canister Signatures], a “signature scheme” based
-on certified variables, and mainly used by identitiy providers such as
+on certified variables, and mainly used by identity providers such as
 [Internet Identity]. The canister gives full control to its certified variables
 to anyone who has guessed the secret, and thus those can sign withdrawal
 requests towards the ledger.
