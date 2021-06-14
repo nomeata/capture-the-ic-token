@@ -76,7 +76,7 @@ actor {
         "See https://github.com/nomeata/capture-the-ic-token for details.\n" #
         "\n" #
         "My current cycle balance:                " # debug_show (ExperimentalCycles.balance()) # "\n" #
-        "Secret loaded from secret tape:          " # debug_show (O.isSome(secret)) # "\n" #
+        "Secret loaded from random tape:          " # debug_show (O.isSome(secret)) # "\n" #
         "Sucessful calls to set_certified_data:   " # debug_show successful_calls # "\n" #
         "Unsucessful calls to set_certified_data: " # debug_show unsuccessful_calls # "\n"
       )
