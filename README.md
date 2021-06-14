@@ -82,11 +82,24 @@ for a rough outline. I used dfx-0.7.0 (moc-0.6.1) on Linux to build this caniste
 Who is the controller of this canister?
 ---------------------------------------
 
-No one (you can check with `dfx canister info`).
+No one. You can check with `dfx canister info` or on [ic.rocks](https://ic.rocks/principal/fj6bh-taaaa-aaaab-qaacq-cai).
 
-The canister reports its cycle balance at <https://TODO.raw.ic0.app/>. Feel
-free to donate a few cycles.  If this canister runs out of cycles and gets
-removed by the system, the ICP prize is lost forever.
+If you see `zrl4w-cqaaa-nocon-troll-eraaa-d5qc` shown as a controller, then you
+are using a tool that does not speak the latest IC protocol. This is a
+placeholder princpal (note that it says “no controller” in the middle).
+
+
+The canister reports its cycle balance at
+<https://fj6bh-taaaa-aaaab-qaacq-cai.raw.ic0.app/>. Feel free to donate a few
+cycles.  If this canister runs out of cycles and gets removed by the system,
+the ICP prize is lost forever.
+
+Why does this canister control some canisters?
+----------------------------------------------
+
+Becuase I was given this canister by a colleage who was using this as a wallet
+canister, but does not use it any more. Guess these controlled canisters are
+now also orphans.
 
 Are Canister Signaures even supported yet?
 ------------------------------------------
@@ -130,9 +143,10 @@ I used the code in [`dfinity/ic-hs`](https://github.com/dfinity/ic-hs) for these
 What happens if I transfer funds to that account?
 -------------------------------------------------
 
-They will up the stakes for this treasure hunt, so feel free to!
+They will up the stakes for this treasure hunt, so feel free to! But note that
+very likely, these tokens would simply be lost.
 
-But note that very likely, these tokens would simply be lost.
+Also, should the subnet hosting this canister ever get reset, or Canister Signatures not implemented as planned, the tokens would be lost.
 
 More questions or comments?
 ---------------------------
