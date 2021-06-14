@@ -7,9 +7,9 @@ Internet Computer’s random tape (using the `aaaaa-aa.raw_rand()` call), and
 then kept in main memory. If you find a way to read from the secret tape, or
 from the canister’s main memory you unlock one ICP.
 
-The canister is live with canister id **TODO** (not live yet).
+The canister is live with canister id [**fj6bh-taaaa-aaaab-qaacq-cai**](https://fj6bh-taaaa-aaaab-qaacq-cai.raw.ic0.app/).
 
-The ICP is sitting in account **TODO** owned by principal **TODO**.
+The ICP is sitting in account [**62c01571c33e6b6d118842e2bc25193d6730f6a05580c64d4438411062f13310**](https://dashboard.internetcomputer.org/account/62c01571c33e6b6d118842e2bc25193d6730f6a05580c64d4438411062f13310) owned by principal **cjt7z-jev62-yoecz-5uvop-y5gys-qll6h-2atgr-df2hv-wspla-dbwm7-kqe**.
 
 FAQ
 ===
@@ -26,6 +26,15 @@ features of the Internet Computer, namely
  * Writing canisters in Motoko
 
 [Canister Signatures]: https://sdk.dfinity.org/docs/interface-spec/index.html#canister-signatures
+
+Did someone hack this already?
+------------------------------
+
+Hopefully not! You can check [the
+account](https://dashboard.internetcomputer.org/account/62c01571c33e6b6d118842e2bc25193d6730f6a05580c64d4438411062f13310)
+if the token is still there, and you can go to
+<https://fj6bh-taaaa-aaaab-qaacq-cai.raw.ic0.app/> and see if there were any
+“Successful calls to set_certified_data”.
 
 I heard canisters cannot hold ICPs. How does this work?
 ------------------------------------------------------
@@ -45,7 +54,8 @@ requests towards the ledger.
 I know the secret, how do I get the ICP?
 ----------------------------------------
 
-You still have to do a little bit of coding. Here is a rough outline:
+You still have to do a little bit of coding, which is part of the exercise.
+Here is a rough outline:
 
  * Create a request to transfer the token to your account.
  * Create a hash tree that contains a signature to this request in
@@ -57,6 +67,10 @@ You still have to do a little bit of coding. Here is a rough outline:
  * Construct a canister signature from the certificate and your hash tree
  * Submit this to the Internet Computer
  * Profit
+
+If you like the programming challenge even without finding a bug in the
+Internet Computer, and have implemented a tool for this, feel free to link to
+it here.
 
 Are you really running the code you claim to run?
 -------------------------------------------------
@@ -84,8 +98,44 @@ lines](https://github.com/dfinity/ic/blob/779549eccfcf61ac702dfc2ee6d76ffdc2db1f
 and will be removed soon™. If you indeed manage to get the secret before this
 restriction is removed, well, be proud of it.
 
-More questions?
----------------
+How did you calculate the principal and account number?
+-------------------------------------------------------
+
+The principal “owning” the token is derived from a Canister Signature public “key”, with the empty blob as the seed. From that we can calculate the ICP ledger address (with subaccount 0).
+
+I used the code in [`dfinity/ic-hs`](https://github.com/dfinity/ic-hs) for these calculations:
+
+```
+~/dfinity/ic-hs $ cabal repl
+> :set -XOverloadedStrings
+> import Codec.Candid
+> let Right (Principal raw_canister) = parsePrincipal "fj6bh-taaaa-aaaab-qaacq-cai"
+> let raw_principal = IC.Id.Forms.mkSelfAuthenticatingId (IC.Crypto.CanisterSig.genPublicKey ((\(Right (Principal p)) -> EntityId p) (parsePrincipal "fj6bh-taaaa-aaaab-qaacq-cai")) "")
+> prettyPrincipal (Principal raw_principal)
+"cjt7z-jev62-yoecz-5uvop-y5gys-qll6h-2atgr-df2hv-wspla-dbwm7-kqe"
+> import qualified Data.ByteString.Lazy as BS
+> let subaccount = BS.replicate 32 0
+> let account_hash = IC.Hash.sha224 ("\x0a" <> "account-id" <> raw_principal <> subaccount)
+> import Data.Digest.CRC32
+> let CRC32 checksum = digest (BS.toStrict account_hash)
+> import qualified Data.ByteString.Builder as BS
+> let checkbytes = BS.toLazyByteString (BS.word32BE checksum)
+> import qualified Text.Hex as T
+> T.encodeHex (BS.toStrict (checkbytes <> account_hash))
+"62c01571c33e6b6d118842e2bc25193d6730f6a05580c64d4438411062f13310"
+```
+
+(And [ic.rocks](https://ic.rocks/principal/cjt7z-jev62-yoecz-5uvop-y5gys-qll6h-2atgr-df2hv-wspla-dbwm7-kqe) nicely confirms this calculation.)
+
+What happens if I transfer funds to that account?
+-------------------------------------------------
+
+They will up the stakes for this treasure hunt, so feel free to!
+
+But note that very likely, these tokens would simply be lost.
+
+More questions or comments?
+---------------------------
 
 I have enabled the discussion feature on this repository, feel free to use it.
 Else <https://forum.dfinity.org/> is a fine venue for questions.
