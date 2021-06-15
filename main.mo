@@ -45,7 +45,7 @@ actor {
   public shared({caller}) func set_certified_data(hash : Blob, data : Blob) : async () {
     switch secret {
       case (?s) {
-        if (sha256(Principal.toBlob(caller), hash) == s) {
+        if (sha256(Principal.toBlob(caller), s) == hash) {
           successful_calls += 1;
           CertifiedData.set(data)
         } else {
