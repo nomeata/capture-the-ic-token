@@ -7,9 +7,9 @@ Internet Computer’s random tape (using the `aaaaa-aa.raw_rand()` call), and
 then kept in main memory. If you find a way to read from the secret tape, or
 from the canister’s main memory you unlock one ICP.
 
-The canister is live with canister id [**fj6bh-taaaa-aaaab-qaacq-cai**](https://fj6bh-taaaa-aaaab-qaacq-cai.raw.ic0.app/).
+The canister is live with canister id [`6b4pv-sqaaa-aaaah-qaava-cai`](https://6b4pv-sqaaa-aaaah-qaava-cai.raw.ic0.app/).
 
-The ICP is sitting in account [**62c01571c33e6b6d118842e2bc25193d6730f6a05580c64d4438411062f13310**](https://dashboard.internetcomputer.org/account/62c01571c33e6b6d118842e2bc25193d6730f6a05580c64d4438411062f13310) owned by principal **cjt7z-jev62-yoecz-5uvop-y5gys-qll6h-2atgr-df2hv-wspla-dbwm7-kqe**.
+The ICP is sitting in account [**39141f05da8f71024656155dbb7135ff10e3692741dd4dcc65bbe8d867061c1e**](https://dashboard.internetcomputer.org/account/39141f05da8f71024656155dbb7135ff10e3692741dd4dcc65bbe8d867061c1e) owned by principal **qhngm-45l5d-nm6db-whcbh-dkq5h-n66gd-scpbe-tl3k7-dp3n7-t3liu-wae**.
 
 FAQ
 ===
@@ -31,9 +31,9 @@ Did someone hack this already?
 ------------------------------
 
 Hopefully not! You can check [the
-account](https://dashboard.internetcomputer.org/account/62c01571c33e6b6d118842e2bc25193d6730f6a05580c64d4438411062f13310)
+account](https://dashboard.internetcomputer.org/account/39141f05da8f71024656155dbb7135ff10e3692741dd4dcc65bbe8d867061c1e)
 if the token is still there, and you can go to
-<https://fj6bh-taaaa-aaaab-qaacq-cai.raw.ic0.app/> and see if there were any
+<https://6b4pv-sqaaa-aaaah-qaava-cai.raw.ic0.app/> and see if there were any
 “Successful calls to set_certified_data”.
 
 I heard canisters cannot hold ICPs. How does this work?
@@ -82,7 +82,7 @@ for a rough outline. I used dfx-0.7.0 (moc-0.6.1) on Linux to build this caniste
 Who is the controller of this canister?
 ---------------------------------------
 
-No one. You can check with `dfx canister info` or on [ic.rocks](https://ic.rocks/principal/fj6bh-taaaa-aaaab-qaacq-cai).
+No one. You can check with `dfx canister info` or on [ic.rocks](https://ic.rocks/principal/6b4pv-sqaaa-aaaah-qaava-cai).
 
 If you see `zrl4w-cqaaa-nocon-troll-eraaa-d5qc` shown as a controller, then you
 are using a tool that does not speak the latest IC protocol. This is a
@@ -90,7 +90,7 @@ placeholder princpal (note that it says “no controller” in the middle).
 
 
 The canister reports its cycle balance at
-<https://fj6bh-taaaa-aaaab-qaacq-cai.raw.ic0.app/>. Feel free to donate a few
+<https://6b4pv-sqaaa-aaaah-qaava-cai.raw.ic0.app/>. Feel free to donate a few
 cycles.  If this canister runs out of cycles and gets removed by the system,
 the ICP prize is lost forever.
 
@@ -122,10 +122,10 @@ I used the code in [`dfinity/ic-hs`](https://github.com/dfinity/ic-hs) for these
 ~/dfinity/ic-hs $ cabal repl
 > :set -XOverloadedStrings
 > import Codec.Candid
-> let Right (Principal raw_canister) = parsePrincipal "fj6bh-taaaa-aaaab-qaacq-cai"
-> let raw_principal = IC.Id.Forms.mkSelfAuthenticatingId (IC.Crypto.CanisterSig.genPublicKey ((\(Right (Principal p)) -> EntityId p) (parsePrincipal "fj6bh-taaaa-aaaab-qaacq-cai")) "")
+> let Right (Principal raw_canister) = parsePrincipal "6b4pv-sqaaa-aaaah-qaava-cai"
+> let raw_principal = IC.Id.Forms.mkSelfAuthenticatingId (IC.Crypto.CanisterSig.genPublicKey (EntityId raw_canister) "")
 > prettyPrincipal (Principal raw_principal)
-"cjt7z-jev62-yoecz-5uvop-y5gys-qll6h-2atgr-df2hv-wspla-dbwm7-kqe"
+"qhngm-45l5d-nm6db-whcbh-dkq5h-n66gd-scpbe-tl3k7-dp3n7-t3liu-wae"
 > import qualified Data.ByteString.Lazy as BS
 > let subaccount = BS.replicate 32 0
 > let account_hash = IC.Hash.sha224 ("\x0a" <> "account-id" <> raw_principal <> subaccount)
@@ -135,10 +135,10 @@ I used the code in [`dfinity/ic-hs`](https://github.com/dfinity/ic-hs) for these
 > let checkbytes = BS.toLazyByteString (BS.word32BE checksum)
 > import qualified Text.Hex as T
 > T.encodeHex (BS.toStrict (checkbytes <> account_hash))
-"62c01571c33e6b6d118842e2bc25193d6730f6a05580c64d4438411062f13310"
+"39141f05da8f71024656155dbb7135ff10e3692741dd4dcc65bbe8d867061c1e"
 ```
 
-(And [ic.rocks](https://ic.rocks/principal/cjt7z-jev62-yoecz-5uvop-y5gys-qll6h-2atgr-df2hv-wspla-dbwm7-kqe) nicely confirms this calculation.)
+(And [ic.rocks](https://ic.rocks/principal/qhngm-45l5d-nm6db-whcbh-dkq5h-n66gd-scpbe-tl3k7-dp3n7-t3liu-wae) nicely confirms this calculation.)
 
 What happens if I transfer funds to that account?
 -------------------------------------------------
@@ -147,6 +147,16 @@ They will up the stakes for this treasure hunt, so feel free to! But note that
 very likely, these tokens would simply be lost.
 
 Also, should the subnet hosting this canister ever get reset, or Canister Signatures not implemented as planned, the tokens would be lost.
+
+What is `fj6bh-taaaa-aaaab-qaacq-cai`?
+--------------------------------------
+
+The canister at [`fj6bh-taaaa-aaaab-qaacq-cai`](https://fj6bh-taaaa-aaaab-qaacq-cai.raw.ic0.app/) is an earlier attempt at setting up this challenge, but it is buggy buggy version of the challenge. See [commit `112933`](https://github.com/nomeata/capture-the-ic-token/commit/112933eb612c8fb97cd8fb0de0cd1688db00e320) for the changes.
+
+This means that in order to get the ICP token “owned” by that canister, which sits in [**62c01571c33e6b6d118842e2bc25193d6730f6a05580c64d4438411062f13310**](https://dashboard.internetcomputer.org/account/62c01571c33e6b6d118842e2bc25193d6730f6a05580c64d4438411062f13310), can be reaped by anyone who manages to *modify the canister code or state*.
+
+Good luck!
+
 
 More questions or comments?
 ---------------------------
