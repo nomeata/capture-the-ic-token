@@ -155,6 +155,10 @@ This means that in order to get the ICP token “owned” by that canister, whic
 
 Good luck!
 
+What is [**39141f05da8f71024656155dbb7135ff10e3692741dd4dcc65bbe8d867061c1e**](https://dashboard.internetcomputer.org/account/39141f05da8f71024656155dbb7135ff10e3692741dd4dcc65bbe8d867061c1e)?
+-----------------------
+
+This account holds 1 ICP and was the account I originally claimed to be owned by the present canister. But I made a mistake calculating the account number, so that token is probably lost forever. H't to @mraszyk for noticing when he solved the challenge.
 
 More questions or comments?
 ---------------------------
