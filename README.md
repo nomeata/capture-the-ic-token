@@ -1,15 +1,15 @@
 Capture The IC Token
 ====================
 
-This little project implements a canister that will hold on to **1 ICP** and
+This little project implements a canister that will hold on to **0.1 ICP** and
 reveal it to anyone who can guess a secret. The secret is obtained from the
 Internet Computer’s random tape (using the `aaaaa-aa.raw_rand()` call), and
 then kept in main memory. If you find a way to read from the secret tape, or
-from the canister’s main memory you unlock one ICP.
+from the canister’s main memory you unlock 0.1 ICP.
 
 The canister is live with canister id [`6b4pv-sqaaa-aaaah-qaava-cai`](https://6b4pv-sqaaa-aaaah-qaava-cai.raw.ic0.app/).
 
-The ICP is sitting in account [**39141f05da8f71024656155dbb7135ff10e3692741dd4dcc65bbe8d867061c1e**](https://dashboard.internetcomputer.org/account/39141f05da8f71024656155dbb7135ff10e3692741dd4dcc65bbe8d867061c1e) owned by principal **qhngm-45l5d-nm6db-whcbh-dkq5h-n66gd-scpbe-tl3k7-dp3n7-t3liu-wae**.
+The ICP is sitting in account [**604336f3b4fbd3f45ef058394acdfb8c8e76ea676d90c6147b22888390d06d42**](https://dashboard.internetcomputer.org/account/604336f3b4fbd3f45ef058394acdfb8c8e76ea676d90c6147b22888390d06d42) owned by principal **dn76p-ld3h7-72osu-zv5tz-ot26n-hag5h-jhc5i-3mgv4-wyu4g-hi4j6-vqe**.
 
 FAQ
 ===
@@ -30,10 +30,10 @@ features of the Internet Computer, namely
 Did someone hack this already?
 ------------------------------
 
-Hopefully not! You can check [the
-account](https://dashboard.internetcomputer.org/account/39141f05da8f71024656155dbb7135ff10e3692741dd4dcc65bbe8d867061c1e)
-if the token is still there, and you can go to
-<https://6b4pv-sqaaa-aaaah-qaava-cai.raw.ic0.app/> and see if there were any
+Yes! You can check [the
+account](https://dashboard.internetcomputer.org/account/604336f3b4fbd3f45ef058394acdfb8c8e76ea676d90c6147b22888390d06d42)
+to see the transactions on the reward account, and you can go to
+<https://6b4pv-sqaaa-aaaah-qaava-cai.raw.ic0.app/> and see that there were
 “Successful calls to set_certified_data”.
 
 I heard canisters cannot hold ICPs. How does this work?
@@ -123,9 +123,9 @@ I used the code in [`dfinity/ic-hs`](https://github.com/dfinity/ic-hs) for these
 > :set -XOverloadedStrings
 > import Codec.Candid
 > let Right (Principal raw_canister) = parsePrincipal "6b4pv-sqaaa-aaaah-qaava-cai"
-> let raw_principal = IC.Id.Forms.mkSelfAuthenticatingId (IC.Crypto.CanisterSig.genPublicKey (EntityId raw_canister) "")
+> let raw_principal = IC.Id.Forms.mkSelfAuthenticatingId (IC.Crypto.DER.encode IC.Crypto.DER.CanisterSig $ IC.Crypto.CanisterSig.genPublicKey (EntityId raw_canister) "")
 > prettyPrincipal (Principal raw_principal)
-"qhngm-45l5d-nm6db-whcbh-dkq5h-n66gd-scpbe-tl3k7-dp3n7-t3liu-wae"
+"dn76p-ld3h7-72osu-zv5tz-ot26n-hag5h-jhc5i-3mgv4-wyu4g-hi4j6-vqe"
 > import qualified Data.ByteString.Lazy as BS
 > let subaccount = BS.replicate 32 0
 > let account_hash = IC.Hash.sha224 ("\x0a" <> "account-id" <> raw_principal <> subaccount)
@@ -135,10 +135,8 @@ I used the code in [`dfinity/ic-hs`](https://github.com/dfinity/ic-hs) for these
 > let checkbytes = BS.toLazyByteString (BS.word32BE checksum)
 > import qualified Text.Hex as T
 > T.encodeHex (BS.toStrict (checkbytes <> account_hash))
-"39141f05da8f71024656155dbb7135ff10e3692741dd4dcc65bbe8d867061c1e"
+"604336f3b4fbd3f45ef058394acdfb8c8e76ea676d90c6147b22888390d06d42"
 ```
-
-(And [ic.rocks](https://ic.rocks/principal/qhngm-45l5d-nm6db-whcbh-dkq5h-n66gd-scpbe-tl3k7-dp3n7-t3liu-wae) nicely confirms this calculation.)
 
 What happens if I transfer funds to that account?
 -------------------------------------------------
